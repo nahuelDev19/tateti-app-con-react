@@ -1,3 +1,5 @@
+import { WINNER_COMBOS } from '../constants/constans'
+
 export const checkWinner = (boardToCheck) => {
   for (const combo of WINNER_COMBOS) {
     const [a, b, c] = combo
@@ -6,11 +8,11 @@ export const checkWinner = (boardToCheck) => {
       boardToCheck[b] === boardToCheck[c]
     ) { return boardToCheck[a] }
   }
-  //no hay ganadores
+  // no hay ganadores
   return null
 }
 
-//check end game
+// check end game
 export const checkEndGame = (newBoard) => {
   return newBoard.every((square) => square !== null)
 }

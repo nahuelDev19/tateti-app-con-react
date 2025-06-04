@@ -1,27 +1,21 @@
+import { useState } from 'react'
+import Square from './components/Square'
+import { TURNS, WINNER_COMBOS } from './constants/constans'
+import { checkEndGame } from './logic/board'
+import Winner from './components/Winner'
+import confetti from 'canvas-confetti'
 
-// turnos
-
-import { useState } from "react"
-import Square from "./components/Square"
-import { TURNS, WINNER_COMBOS } from "./constants/constans"
-import { checkEndGame } from "./logic/board"
-import Winner from "./components/Winner"
-import confetti from "canvas-confetti"
-
-
-
-function App() {
-
+function App () {
   const [board, setBoard] = useState(() => {
     const boardStorage = window.localStorage.getItem('board')
-    if (boardStorage)
-      return JSON.parse(boardStorage)
-      return Array(9).fill(null)
+    if (boardStorage) { return JSON.parse(boardStorage) }
+    return Array(9).fill(null)
   })
-  const [turn, setTurn] = useState(()=>{
-    const turnsStorage= window.localStorage.getItem('turns')
-    return turnsStorage ?? TURNS.x})
-  //null no hay ganador, false es enpate
+  const [turn, setTurn] = useState(() => {
+    const turnsStorage = window.localStorage.getItem('turns')
+    return turnsStorage ?? TURNS.x
+  })
+  // null no hay ganador, false es empate
   const [winner, setWinner] = useState(null)
 
   // reset
@@ -34,8 +28,6 @@ function App() {
     window.localStorage.removeItem('turns')
   }
 
-
-
   const checkWinner = (boardToCheck) => {
     for (const combo of WINNER_COMBOS) {
       const [a, b, c] = combo
@@ -44,17 +36,17 @@ function App() {
         boardToCheck[b] === boardToCheck[c]
       ) { return boardToCheck[a] }
     }
-    //no hay ganadores
+    // no hay ganadores
     return null
   }
 
   const updateBoard = (index) => {
-    if (board[index] !== null || winner) return;
-    const newBoard = [...board];
-    newBoard[index] = turn;
+    if (board[index] !== null || winner) return
+    const newBoard = [...board]
+    newBoard[index] = turn
     setBoard(newBoard)
 
-    const newTurn = turn === TURNS.x ? TURNS.o : TURNS.x;
+    const newTurn = turn === TURNS.x ? TURNS.o : TURNS.x
     setTurn(newTurn)
 
     const newWinner = checkWinner(newBoard)
@@ -67,14 +59,14 @@ function App() {
     }
 
     window.localStorage.setItem('board', JSON.stringify(newBoard))
-    window.localStorage.setItem('turns',newTurn)
+    window.localStorage.setItem('turns', newTurn)
   }
 
   return (
-    <main className="board">
+    <main className='board'>
       <h1>ta-te-ti</h1>
       <button onClick={resetGame}>reset</button>
-      <section className="game">
+      <section className='game'>
         {board.map((_, index) => {
           return (
             <Square key={index} index={index} updateBoard={updateBoard}>
@@ -84,10 +76,9 @@ function App() {
         })}
       </section>
 
-      <section className="turn">
+      <section className='turn'>
         <Square isSelect={turn === TURNS.x}>{TURNS.x}</Square>
         <Square isSelect={turn === TURNS.o}>{TURNS.o}</Square>
-
 
       </section>
 

@@ -7,12 +7,14 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "standard"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "standard": "^17.1.2",
     "tateti-app": "file:"
   },
   "devDependencies": {
